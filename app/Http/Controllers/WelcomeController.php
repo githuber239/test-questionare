@@ -49,6 +49,7 @@ class WelcomeController extends Controller
             return Redirect::to('/')->with('error', 'Неверно указан e-mail');
         } else {
             Mail::send('welcome/mail', ['items' => $questions, 'answers' => $answers], function ($message) use ($email) {
+                $message->from('forquestionare@mail.ru');
                 $message->to($email)->subject('Новый ответ');
             });
             return Redirect::to('/')->with('notice', 'Анкета отправлена на указанный e-mail');
