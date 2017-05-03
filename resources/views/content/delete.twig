@@ -1,0 +1,28 @@
+{% extends "layout/html.twig" %}
+{% block content %}
+    <div class="divide80"></div>
+    <div class="container">
+        <legend>{{ "Удалить вопрос" }} </legend>
+        <div>
+                <div>
+                    <form role="form" method="POST" action="{{ url('content/delete/'~question.id) }}" accept-charset="UTF-8">
+                        {% if session_has('error') %}<div class="alert alert-danger">{{ session_get('error')|first|first }}</div>{% endif %}
+                        {% if session_has('notice') %}<div class="alert alert-warning">{{ session_get('notice') }}</div>{% endif %}
+                        <input type="hidden" name="_token" value="{{ _token }}">
+
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <p class="h6">{{ "Удалить вопрос:" }} "{{ question.question }}"?</p>
+                            </div>
+                            <div class="panel-footer">
+                                <button type="submit" class="btn btn-danger"><i class="fa fa-trash-o"></i> {{ "Удалить" }}</button>
+                                <a class="btn btn-default" href="{{ url('content') }}" >{{ "Назад" }}</a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+        </div>
+    </div>
+    <div class="divide80"></div>
+{% endblock content %}

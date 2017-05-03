@@ -1,0 +1,34 @@
+.main-page, .login-page {
+    padding-top: 70px;
+}
+
+.tab-ul {
+    margin: 20px 0;
+}
+
+.tab-ul a {
+    padding: 15px;
+}
+
+.tab-ul li.active a {
+    background: #eee;
+}
+
+.tab-ul a:hover, .tab-ul a:focus {
+    text-decoration: none;
+    color: #337ab7;
+    background: #eee;
+}
+
+.spoiler_links:hover, .spoiler_links:focus {
+    text-decoration: none;
+}
+
+.badge-danger {
+    background-color: #d43f3a;
+}
+
+
+.hover-hand:hover {
+    cursor: pointer;
+}

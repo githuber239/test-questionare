@@ -1,0 +1,39 @@
+{% extends "layout/html.twig" %}
+{% block content %}
+    <div class="main-page">
+    <div class="container-fluid">
+    {% if session_has('error') %}
+        <div class="alert alert-danger">{{ session_get('error') }}</div>{% endif %}
+    {% if session_has('notice') %}
+        <div class="alert alert-success">{{ session_get('notice') }}</div>{% endif %}
+
+        <legend>{{ "Вопросы" }}
+            {% if _user %}
+                <a href="{{ url('content/edit') }}" class="btn btn-primary pull-right"><i
+                        class="fa fa-plus"></i> {{ "Создать новый вопрос" }}</a>
+            {% endif %}
+        </legend>
+
+        <table class="table table-hover table-striped table-bordered table-condensed">
+            <tr style="font-size: 11px;" >
+                <th>{{ "Вопрос" }}</th>
+                <th></th>
+            </tr>
+            {% for item in questions %}
+            <tr style="font-size: 15px;" >
+                <td>{{ item.question }}</td>
+                <td width="10%">
+                    <a href="{{ url('content/edit/'~item.id) }}"
+                       title="{{ "Редактировать" }}" class="btn btn-xs btn-success"><i
+                                class="fa fa-fw fa-cog"></i></a>
+                    <a href="{{ url('content/delete/'~item.id) }}"
+                       title="{{ "Удалить" }}" class="btn btn-xs btn-danger"><i
+                                class="fa fa-fw fa-trash"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    </div>
+
+{% endblock content %}

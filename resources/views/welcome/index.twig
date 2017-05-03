@@ -1,0 +1,60 @@
+{% extends "layout/html" %}
+{% block content %}
+    <div class="main-page">
+        <div class="container-fluid">
+            {% if session_has('error') %}
+                <div class="alert alert-danger">{{ session_get('error') }}</div>{% endif %}
+            {% if session_has('notice') %}
+                <div class="alert alert-success">{{ session_get('notice') }}</div>{% endif %}
+
+            <legend>{{ "Анкета" }}</legend>
+
+              <div class="tab-content">
+                <div class="tab-pane active">
+                    <form role="form" method="post" id="form" action="" accept-charset="UTF-8">
+                        <input type="hidden" name="_token" value="{{ _token }}">
+                        {% for question in questions %}
+                            <div class="row-fluid">
+                                <h4>
+                                    {{ question.question }}
+                                </h4>
+                                {% for item in answers[question.id] %}
+                                    <div class="form-group-sm hover-hand" id="answers"><input type="radio" name="answers[{{ question.id }}]" value="{{ item.answer }}" >{{ item.answer }}</div>
+                                {% endfor %}
+                            </div>
+                            <hr>
+                        {% endfor %}
+
+                        <div class="form-group">
+                            <input type="email" id="email" required class="form-control-static" placeholder="E-mail" name="email">
+                            <button type="submit" id="do"
+                                    onclick="
+                                        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+                                        if (emailReg.test( $('#email').val() ))
+                                        {
+                                            getElementById('do').disabled=true;
+                                            getElementById('form').submit();
+                                        }
+                                    "
+                                    class="btn btn-info"><i class="fa fa-send"></i> {{ "Отправить на почту" }}</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block init_scripts %}
+    <script>
+        $(document).ready(function () {
+            $('.form-group-sm').click(function () {
+                $(this).find('input:radio')[0].checked = true;
+            });
+        });
+    </script>
+{% endblock init_scripts %}

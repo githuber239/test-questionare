@@ -1,0 +1,30 @@
+{% extends "layout/html" %}
+{% block content %}
+    <div class="main-page">
+        <div class="container-fluid">
+            {% if session_has('error') %}
+                <div class="alert alert-danger">{{ session_get('error') }}</div>
+            {% endif %}
+            <form class="well form-inline" role="form" method="post" action="{{ url('auth/login') }}"
+                  accept-charset="UTF-8">
+                <h2>Авторизация</h2>
+
+                <div class="form-group">
+                    <input type="hidden" name="_token" value="{{ _token }}">
+                    <input type="text" class="form-control" placeholder="Введите логин"
+                           name="username">
+                    <input type="password" class="form-control" placeholder="Пароль"
+                           name="password">
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </div>
+                <div>
+                    <div class="checkbox">
+                        <input type="hidden" name="remember" value="0">
+                        <label><input type="checkbox" name="remember" value="1"> Запомнить</label>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+{% endblock content %}

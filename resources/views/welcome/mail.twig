@@ -1,0 +1,5 @@
+<b>Анкета</b>:<br><br>
+{% for item in items %}
+    Вопрос: "{{ item.question }}"<br>
+    {% if answers[item.id] is defined%}Выбранный ответ: "{{ answers[item.id] }}"{% else %}Ответ не выбран{% endif %}<br><br>
+{% endfor %}

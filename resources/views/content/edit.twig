@@ -1,0 +1,93 @@
+{% extends "layout/html.twig" %}
+{% block content %}
+
+<div class="main-page">
+    <div class="container-fluid">
+        {% if session_has('error') %}
+            <div class="alert alert-danger">{{ session_get('error') }}</div>{% endif %}
+        {% if session_has('notice') %}
+            <div class="alert alert-success">{{ session_get('notice') }}</div>{% endif %}
+
+        <legend>{% if question %}{{ "Редактирование вопроса" }}{% else %}{{ "Создать вопрос" }}{% endif %}
+        </legend>
+
+        <form role="form" method="post" id="form" action="" accept-charset="UTF-8">
+            <input type="hidden" name="_token" value="{{ _token }}">
+
+                    <div class="form-group">
+                        <label for="question">{{ "Вопрос" }}</label>
+                        <div class="question" >
+                            <textarea name="question" cols="13" rows="3" id="question" novalidate class="form-control" style="resize: horizontal; overflow-y: scroll;">{{ input_old('question')|default(question.question|default('')) }}</textarea>
+                        </div>
+                    </div>
+
+
+            <div class="form-group" id="answers">
+                {% for item in answers %}
+                    <div class="form-group" style="display: block;">
+                        <input type="text" name="answers[]" size="55" value="{{ input_old('answers[]')|default(item.answer|default('')) }}">
+                        <button type="button" id="delete" class="btn btn-danger btn-xs"><i class="fa fa-remove"></i></button>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <button type="button" id="add" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> {{ "Добавить ответ" }}</button>
+            </div>
+            <hr>
+
+            <div class="form-group">
+                <a href="{{ url('content') }}" class="btn btn-default"  >{{ "Назад" }}</a>
+                <button type="submit" id="do"
+                        onclick="
+                            getElementById('do').disabled=true;
+                            $('[id=delete]').prop('disabled', true);
+                            $('#add').prop('disabled', true);
+                            getElementById('form').submit();"
+                        class="btn btn-success">{% if question %}{{ "Сохранить" }}{% else %}{{ "Создать" }}{% endif %}</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block init_scripts %}
+    <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            var count = 0;
+
+            $('#add').on('click', function () {
+                count++;
+                $("#answers").append('' +
+                    '<div class="form-group" id="new_div_' + count +'">' +
+                        '<input type="text" name="answers[]" size="55">' +
+                        ' <button type="button" id="delete" class="btn btn-danger btn-xs"><i class="fa fa-remove"></i></button>'
+                    + '<div>');
+                $("#new_div_" + count).hide();
+                $("#new_div_" + count).show("normal");
+                $("#new_div_" + count).find('input').focus();
+
+                $('[id=delete]').on('click', function () {
+                    $(this).parent().hide(300, function () {
+                        $(this).remove();
+                    });
+                })
+
+            })
+
+            $('[id=delete]').on('click', function () {
+                $(this).parent().hide(300, function () {
+                    $(this).remove();
+                });
+            })
+
+        });
+
+
+    </script>
+{% endblock init_scripts %}

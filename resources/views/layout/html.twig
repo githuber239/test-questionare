@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ _metadata.title }}</title>
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-theme.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.pack.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}"/>
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" data-target="#collapse-main-menu"
+                    data-toggle="collapse" type="button">
+                <span class="fa fa-bars"></span>
+            </button>
+                    {% if _user %}
+                        <span class="navbar-brand hidden-sm hidden-md" >{{ _user.name }}</span>
+                        <a class="navbar-btn btn btn-xs btn-danger" href="{{ url('auth/logout') }}"><i class="fa fa-sign-out"></i></a>
+                    {% else %}
+                        <a class="navbar-btn btn btn-xs btn-success" href="{{ url('auth/login') }}"><i class="fa fa-sign-in"> {{ "Войти" }}</i></a>
+                    {% endif %}
+        </div>
+
+            <div class="navbar-collapse collapse" id="collapse-main-menu">
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="/">{{ "Главная" }}</a>
+                    </li>
+                    {% if _user.is_admin %}
+                        <li >
+                            <a  href="{{ url('content') }}">{{ "Контент" }}</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+
+    </div>
+</div>
+
+<section>
+    {% block content %}
+    {% endblock content %}
+</section>
+
+{% block init_scripts %}
+{% endblock init_scripts %}
+
+</body>
+</html>
