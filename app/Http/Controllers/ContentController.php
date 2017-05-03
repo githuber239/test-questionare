@@ -79,7 +79,7 @@ class ContentController extends Controller
             if ($item != null)
             {
                 $index++;
-                $answer = Answer::firstOrCreate(['answer_in_question_id' => $index], ['question_id' => $question->id]);
+                $answer = Answer::firstOrCreate(['answer_in_question_id' => $index, 'question_id' => $question->id]);
                 $answer->answer = $item == null ? '' : $item;
                 $answer->answer_in_question_id = $index;
                 $answer->question_id = $question->id;
